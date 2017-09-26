@@ -43,6 +43,7 @@ w = np.divide(np.multiply(tfm,np.log10(np.divide(n,df))), np.sqrt(np.sum(np.mult
 
 # create A matrix, for comparison purpose
 A = np.multiply(tfm, idf)
+q = np.multiply(q, idf)
 
 # calculate rsv 
 rsv = np.dot(A,q)
