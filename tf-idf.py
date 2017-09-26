@@ -50,4 +50,9 @@ rsvw = np.dot(w, q)
 
 print('RSV : ' + str(rsv))
 print('Normalised RSV : ' + str(rsvw))
-print ('Result : 2, 3, 1')
+print('Result : 2, 3, 1')
+
+'''RSV : [ 0.17609126  0.52827378  0.35218252]
+Normalised RSV : [ 0.1714372   0.51431159  0.34287439]
+Result : 2, 3, 1
+'''
