@@ -1,37 +1,53 @@
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 
+# joseph at tarigan at binus dot ac dot id
+# 1801622663
+
+# documents
 d1 = 'shipment of gold damaged in a fire'
 d2 = 'delivery of silver arrived in a silver truck'
 d3 = 'shipment of gold arrived in a truck'
-q = 'gold silver truck'
 n = 3
 
-# normalise
+# query
+q = 'gold silver truck'
+
+# normalise the words
 d1 = d1.lower()
 d2 = d2.lower()
 d3 = d3.lower()
 q = q.lower()
 
-# convert term string into Terms
+# convert query string into terms
 terms = q.split(' ')
 
 # dtm
 vectorizer = CountVectorizer(d1)
-dtm = vectorizer.fit_transform([d1,d2,d3,q])
+tfm = vectorizer.fit_transform([d1,d2,d3,q])
 vocabs = vectorizer.get_feature_names()
-dtm = dtm.toarray()
-q = dtm[3]
-dtm = np.resize(dtm, (3, dtm.shape[1]))
+tfm = tfm.toarray()
 
-df = np.sum(dtm, axis=0)
+# query doc-term
+q = tfm[3]
+# documents doc-term
+tfm = np.resize(tfm, (3, tfm.shape[1]))
+
+# flatten the dtm to create df
+df = np.sum(tfm, axis=0)
+# calculate idf
 idf = np.log10(n/df)
 
-a = np.multiply(dtm, idf)
-rsv = np.dot(a,q)
+# normalise the tf-idf
+w = np.divide(np.multiply(tfm,np.log10(np.divide(n,df))), np.sqrt(np.sum(np.multiply(np.power(tfm, 2), np.power(np.log10(np.divide(n,df)), 2)))))
+
+# create A matrix, for comparison purpose
+A = np.multiply(tfm, idf)
+
+# calculate rsv 
+rsv = np.dot(A,q)
+rsvw = np.dot(w, q)
 
 print('RSV : ' + str(rsv))
-
-tfidf = np.multiply(df,idf)
-
+print('Normalised RSV : ' + str(rsvw))
 print ('Result : 2, 3, 1')
